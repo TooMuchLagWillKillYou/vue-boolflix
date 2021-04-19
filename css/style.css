@@ -1,0 +1,16 @@
+body{
+    background-color: mistyrose;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.row{
+    display: flex;
+}
+
+.movie-container{
+    display: inline-block;
+    padding: 20px;
+    margin: 20px;
+    background-color: white;
+    color: black;
+}

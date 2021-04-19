@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"></script>
+    <script src="js/script.js"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+
+        <div class="container">
+            <div class="row">
+                <input type="text" id="" v-model="search" placeholder="Cerca...">
+                <button id="start-search">VAI</button>
+            </div>
+
+            <div class="row">
+                <div class="movie-container" v-for="(res, index) in searchResults">
+                    <p>{{ res.title || res.name}}</p>
+                    <p>{{ res.original_title || res.original_name}}</p>
+                    <p>{{ res.vote_average }}</p>
+                    <img v-if="printFlag(index)" :src="printFlag(index)" alt="">
+                    <p v-else>{{ res.original_language }}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
+
+<!-- TODO
+- stampare solo title nel caso sia uguale a original_title
+- risolvere bug
+ -->
