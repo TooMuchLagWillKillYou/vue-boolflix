@@ -1,25 +1,169 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
 body{
-    background-color: mistyrose;
+    background-color: black;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
 }
 
 .row{
     display: flex;
+    justify-content: space-between;
+    padding: 20px;
 }
 
-.container.movies,
-.container.series{
-    display: inline-block;
+.header-right,
+.header-left{
+    display: flex;
+    align-items: center;
+}
+
+.card.movies,
+.card.series{
+    display: flex;
+    flex-direction: column;
+    margin: 20px 1px;
+    color: white;
+}
+
+.to-hover{
+    display: flex;
+    flex-direction: column;
+    background-color: grey;
     padding: 20px;
-    margin: 20px;
+    height: 340.5px;
+
+}
+
+img + .to-hover{
+    display: none;
+}
+
+.card.movies:hover .to-hover,
+.card.series:hover .to-hover{
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    
+}
+
+.card.movies:hover>img,
+.card.series:hover>img{
+    display: none;
+}
+
+.series{
+    background-color: lightpink;
+}
+
+/******** layout - end ********/
+
+.header-left>img{
+    max-width: 200px;
+    margin-right: 50px;
+}
+
+.row ul li{
+    display: inline;
+    list-style: none;
+    margin-right: 20px;
+}
+
+ul li a{
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.header-right input,
+.header-right button{
+    background: none;
+    color: white;
+    padding: 10px;
+}
+
+.header-right input{
+    border: none;
+    border-bottom: 1px solid white;
+    margin-right: 20px;
+}
+
+.header-right button{
+    border: 1px solid white;
+    cursor: pointer;
+}
+
+.header-right button:hover{
     background-color: white;
     color: black;
 }
 
-.poster{
-    max-width: 150px;
+.movies img,
+.series img{
+    max-width: 100%;
 }
 
-.yellow{
-    color: orange;
+h4 + .stars{
+    margin-top: 15px;
+}
+
+h4 + h5{
+    margin-top: 10px;
+}
+
+h5 + .stars{
+    margin-top: 15px;
+}
+
+h4 span,
+h5 span{
+    font-weight: 400;
+}
+
+.stars{
+    display: flex;
+    align-items: center;
+}
+
+.stars .fas.fa-star{
+    color: Goldenrod;
+}
+
+.stars .far.fa-star{
+    color: darkgray;
+}
+
+.overview{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    margin: 20px 0;
+}
+
+img.flag,
+.lang{
+    align-self: flex-end;
+    margin-top: auto;
+}
+
+img.flag{
+    max-width: 50px;
+}
+
+.lang{
+    display: inline-block;
+    padding: .5em 1em;
+    border-radius: 20px;
+    border: 1px solid white;
 }

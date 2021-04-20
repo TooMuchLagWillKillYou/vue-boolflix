@@ -18,29 +18,73 @@
         <div class="container">
 
             <div class="row">
-                <input type="text" v-model="search">
-                <button @click="startSearch()">GO</button>
+                <div class="header-left">
+                    <img src="https://image.tmdb.org/t/p/w342/wwemzKWzjKYJFfCeiB57q3r4Bcm.png" alt="">
+
+                    <ul>
+                        <li><a href="">Home</a></li>
+                        <li><a href="">Serie TV</a></li>
+                        <li><a href="">Film</a></li>
+                        <li><a href="">Originali</a></li>
+                        <li><a href="">Aggiunti di recente</a></li>
+                        <li><a href="">La mia lista</a></li>
+                    </ul>
+                </div>
+                
+                <div class="header-right">                  
+                    <input type="text" v-model="search">
+                    <button @click="startSearch()">Cerca</button>
+                </div>
             </div>
     
-            <div class="row">
-                <div v-for="movie in printMovies" class="container movies">
-                    <p>{{ movie.title }}</p>
-                    <p>{{ movie.original_title }}</p>
-                    <p>{{ movie.vote_average }}</p>
-                    <i v-for="star in movie.vote_average" class="fas fa-star"></i>
-                    <i v-for="star in (5 - movie.vote_average)" class="far fa-star"></i>
-                    <img v-if="movie.flag" :src="movie.flag" alt="">
-                    <p v-else>{{ movie.original_language }}</p>
-                    <img :src="`https://image.tmdb.org/t/p/w154/${movie.poster_path}`" alt="">
+            <div class="grid">
+                <div v-for="movie in printMovies" class="card movies">
+
+                    <img v-if="movie.poster_path" :src="`https://image.tmdb.org/t/p/w342${movie.poster_path}`" alt="">
+                    <!-- <img v-else :src="`https://image.tmdb.org/t/p/w342${movie.backdrop_path}`" alt=""> -->
+                    
+                    <div class="to-hover">
+                        <h4><span>Titolo: </span>{{ movie.title }}</h4>
+                        <h5 v-if="movie.title != movie.original_title"><span>Titolo originale: </span>{{ movie.original_title }}</h5>
+                        
+                        <div class="stars">
+                            <span>Voto:</span>
+                            <i v-for="star in movie.vote_average" class="fas fa-star"></i>
+                            <i v-for="star in (5 - movie.vote_average)" class="far fa-star"></i>
+                        </div>
+    
+                        <p class="overview">Overview: {{ movie.overview }}</p>
+                        <img v-if="movie.flag" :src="movie.flag" alt="" class="flag">
+                        
+                        <div v-else class="lang">
+                            <p>{{ movie.original_language }}</p>
+                        </div>
+                    </div>
+                        
                 </div>
     
-                <div v-for="serie in printSeries" class="container series">
-                    <p>{{ serie.name }}</p>
-                    <p>{{ serie.original_name }}</p>
-                    <p>{{ serie.vote_average }}</p>
-                    <img v-if="serie.flag" :src="serie.flag" alt="">
-                    <p v-else>{{ serie.original_language }}</p>
-                    <img :src="`https://image.tmdb.org/t/p/w154/${serie.poster_path}`" alt="">
+                <div v-for="serie in printSeries" class="card series">
+                    
+                    <img :src="`https://image.tmdb.org/t/p/w342/${serie.poster_path}`" alt="">
+
+                    <div class="to-hover">
+                        <h4><span>Titolo: </span>{{ serie.name }}</h4>
+                        <h5 v-if="serie.name != serie.original_name"><span>Titolo originale: </span>{{ serie.original_name }}</h5>
+                        
+                        <div class="stars">
+                            <span>Voto:</span>
+                            <i v-for="star in serie.vote_average" class="fas fa-star"></i>
+                            <i v-for="star in (5 - serie.vote_average)" class="far fa-star"></i>
+                        </div>
+    
+                        <p class="overview">Overview: {{ serie.overview }}</p>
+                        <img v-if="serie.flag" :src="serie.flag" alt="" class="flag">
+                        
+                        <div v-else class="lang">
+                            <p>{{ serie.original_language }}</p>
+                        </div>
+                    </div>
+                
                 </div>
             </div>
         
@@ -51,4 +95,8 @@
 
 <!-- TODO
 - stampare solo title nel caso sia uguale a original_title
+- attributi immagini con la chiave dell'item?
+- v-if sull'overview? Perchè alcuni risultati non hanno overview
+- risultati che non hanno poster
+- sistemare stelline
  -->

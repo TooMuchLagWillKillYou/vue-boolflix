@@ -6,7 +6,7 @@ function initVue(){
 
         data: {
 
-            search: 'ritorno al futuro',
+            search: 'matrix',
 
             movies: [],
             series: [],
@@ -68,13 +68,11 @@ function initVue(){
                             item.flag = `img/${flag}.webp`
                         }
                     })
-                })
 
-                this.movies.forEach(item => {
+                    item.original_language = item.original_language.toUpperCase();
+                    item.vote_average = Math.ceil(item.vote_average / 2);
 
-                    item.vote_average = Math.ceil(item.vote_average / 2)
-                    console.log(item.vote_average);
-                })              
+                });         
 
                 return this.movies
             },
@@ -90,6 +88,9 @@ function initVue(){
                             item.flag = `img/${flag}.webp`
                         }
                     })
+
+                    item.original_language = item.original_language.toUpperCase();
+                    item.vote_average = Math.ceil(item.vote_average / 2);
                 })
 
                 return this.series
@@ -98,7 +99,7 @@ function initVue(){
         },
 
         updated(){
-            console.log('updated');
+            // console.log('updated');
             
         },
         
