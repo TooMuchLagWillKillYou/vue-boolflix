@@ -40,7 +40,7 @@
             <div class="grid">
                 <div v-for="movie in printMovies" class="card movies">
 
-                    <img v-if="movie.poster_path" :src="`https://image.tmdb.org/t/p/w342${movie.poster_path}`" alt="">
+                    <img :src="`https://image.tmdb.org/t/p/w342${movie.poster_path}`" alt="">
                     <!-- <img v-else :src="`https://image.tmdb.org/t/p/w342${movie.backdrop_path}`" alt=""> -->
                     
                     <div class="to-hover">
@@ -48,7 +48,6 @@
                         <h5 v-if="movie.title != movie.original_title"><span>Titolo originale: </span>{{ movie.original_title }}</h5>
                         
                         <div class="stars">
-                            <span>Voto:</span>
                             <i v-for="star in movie.vote_average" class="fas fa-star"></i>
                             <i v-for="star in (5 - movie.vote_average)" class="far fa-star"></i>
                         </div>
@@ -62,17 +61,16 @@
                     </div>
                         
                 </div>
-    
+                
                 <div v-for="serie in printSeries" class="card series">
                     
-                    <img :src="`https://image.tmdb.org/t/p/w342/${serie.poster_path}`" alt="">
+                    <img v-if="serie.poster_path" :src="`https://image.tmdb.org/t/p/w342${serie.poster_path}`" alt="">
 
                     <div class="to-hover">
                         <h4><span>Titolo: </span>{{ serie.name }}</h4>
                         <h5 v-if="serie.name != serie.original_name"><span>Titolo originale: </span>{{ serie.original_name }}</h5>
                         
                         <div class="stars">
-                            <span>Voto:</span>
                             <i v-for="star in serie.vote_average" class="fas fa-star"></i>
                             <i v-for="star in (5 - serie.vote_average)" class="far fa-star"></i>
                         </div>

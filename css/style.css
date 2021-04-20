@@ -113,15 +113,15 @@ ul li a{
 }
 
 h4 + .stars{
-    margin-top: 15px;
-}
-
-h4 + h5{
     margin-top: 10px;
 }
 
+h4 + h5{
+    margin-top: 5px;
+}
+
 h5 + .stars{
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
 h4 span,
@@ -143,12 +143,13 @@ h5 span{
 }
 
 .overview{
+    font-size: 0.9em;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
-    margin: 20px 0;
+    margin: 15px 0;
 }
 
 img.flag,
