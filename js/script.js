@@ -58,6 +58,7 @@ function initVue(){
             printMovies: function(){
                 
                 // Dove posso creare una funzione per automatizzare le flags?
+                // È giusto mettere tutto in un unico ciclo?
                 this.movies.forEach(item => {
 
                     this.flags.forEach(flag => {
@@ -68,7 +69,13 @@ function initVue(){
                         }
                     })
                 })
-                
+
+                this.movies.forEach(item => {
+
+                    item.vote_average = Math.ceil(item.vote_average / 2)
+                    console.log(item.vote_average);
+                })              
+
                 return this.movies
             },
 

@@ -27,8 +27,11 @@
                     <p>{{ movie.title }}</p>
                     <p>{{ movie.original_title }}</p>
                     <p>{{ movie.vote_average }}</p>
+                    <i v-for="star in movie.vote_average" class="fas fa-star"></i>
+                    <i v-for="star in (5 - movie.vote_average)" class="far fa-star"></i>
                     <img v-if="movie.flag" :src="movie.flag" alt="">
                     <p v-else>{{ movie.original_language }}</p>
+                    <img :src="`https://image.tmdb.org/t/p/w154/${movie.poster_path}`" alt="">
                 </div>
     
                 <div v-for="serie in printSeries" class="container series">
@@ -37,6 +40,7 @@
                     <p>{{ serie.vote_average }}</p>
                     <img v-if="serie.flag" :src="serie.flag" alt="">
                     <p v-else>{{ serie.original_language }}</p>
+                    <img :src="`https://image.tmdb.org/t/p/w154/${serie.poster_path}`" alt="">
                 </div>
             </div>
         
@@ -47,6 +51,4 @@
 
 <!-- TODO
 - stampare solo title nel caso sia uguale a original_title
-- risolvere bug
-- button v-on click
  -->
