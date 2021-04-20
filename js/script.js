@@ -7,7 +7,8 @@ function initVue(){
         data: {
 
             search: 'ritorno al futuro',
-            searchResults: [],
+            movies: [],
+            series: [],
 
             countries: [
                 {
@@ -25,16 +26,37 @@ function initVue(){
 
         methods: {
 
-            printFlag: function(index){
+            printFlag: function(index, array){
                 
                 for (let i = 0; i < this.countries.length; i++){
 
-                    if (this.searchResults[index].original_language == this.countries[i].language){
+                    if (array[index].original_language == this.countries[i].language){
 
                         return `img/${this.countries[i].flag}`
-
                     }
                 }
+            },
+
+            getPoster: function(item, size){
+
+                const path = `https://image.tmdb.org/t/p/${size}${item.poster_path}`
+                return path
+            },
+
+            printVote: function(vote, index){
+
+                const roundedVote = parseInt(Math.ceil(vote / 2));
+                const stars = [];
+
+                for (let i = 0; i < roundedVote; i++){
+                    
+                    stars.push(i);
+                    
+                }   
+                
+                console.log(stars, `index = ${index}`);
+                return stars
+
             }
             
         },
@@ -44,7 +66,8 @@ function initVue(){
             const startSearch = document.getElementById('start-search');
             startSearch.addEventListener('click', ()=>{
 
-                this.searchResults = []
+                this.movies = []; // questa cosa qui serve davvero?
+                this.series = [];
 
                 axios.get('https://api.themoviedb.org/3/search/movie', {
 
@@ -55,29 +78,23 @@ function initVue(){
 
                 }).then(data => {
 
+                    data.data.results.forEach(item => { this.movies.push(item) })
 
-                    for (let i = 0; i < data.data.results.length; i++){
-                        
-                        this.searchResults.push(data.data.results[i])
+                });
+                
+                axios.get('https://api.themoviedb.org/3/search/tv', {
+                    
+                    params: {
+                        'api_key': '82c1ff6f50a1c9a2281be84e79f97059',
+                        'query': this.search
                     }
 
-                    axios.get('https://api.themoviedb.org/3/search/tv', {
-                        
-                        params: {
-                            'api_key': '82c1ff6f50a1c9a2281be84e79f97059',
-                            'query': this.search
-                        }
-    
-                    }).then(data => {
-    
-                        for (let i = 0; i < data.data.results.length; i++){
-    
-                            this.searchResults.push(data.data.results[i])
-                        }
-    
-                    })
-                });
+                }).then(data => {
 
+                    data.data.results.forEach(item => { this.series.push(item) })
+                })
+
+                // this.printVote(7.85)
                 
             });
 

@@ -10,28 +10,47 @@
     <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"></script>
     <script src="js/script.js"></script>
     <!-- css -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div id="app">
-
         <div class="container">
+
             <div class="row">
                 <input type="text" id="" v-model="search" placeholder="Cerca...">
                 <button id="start-search">VAI</button>
             </div>
 
             <div class="row">
-                <div class="movie-container" v-for="(res, index) in searchResults">
-                    <p>{{ res.title || res.name}}</p>
-                    <p>{{ res.original_title || res.original_name}}</p>
-                    <p>{{ res.vote_average }}</p>
-                    <img v-if="printFlag(index)" :src="printFlag(index)" alt="">
-                    <p v-else>{{ res.original_language }}</p>
+                <div class="container movies" v-for="(movie, index) in movies">
+                    <h4>{{ movie.title }}</h4>
+                    <p v-if="movie.title != movie.original_title">
+                        {{ movie.original_title }}</p>
+                    <p>{{ movie.vote_average }}</p>
+
+                    <div class="stars">
+                        <i v-for="star in printVote(movie.vote_average, index)" class="fas fa-star" ></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+
+                    <img :src="getPoster(movie, 'w154')" class="poster" alt="">
+                    <img v-if="printFlag(index, movies)" :src="printFlag(index, movies)" alt="">
+                    <p v-else>{{ movie.original_language }}</p>
+                </div>
+
+                <div class="container series" v-for="(serie, index) in series">
+                    <h4>{{ serie.name }}</h4>
+                    <p v-if="serie.name != serie.original_name">{{ serie.original_name} }</p>
+                    <p>{{ serie.vote_average }}</p>
+
+                    <img :src="getPoster(serie, 'w154')" class="poster" alt="">
+                    <img v-if="printFlag(index, series)" :src="printFlag(index, series)" alt="">
+                    <p v-else>{{ serie.original_language }}</p>
                 </div>
             </div>
-        </div>
 
+        </div>
     </div>
 </body>
 </html>
@@ -39,4 +58,5 @@
 <!-- TODO
 - stampare solo title nel caso sia uguale a original_title
 - risolvere bug
+- button v-on click
  -->

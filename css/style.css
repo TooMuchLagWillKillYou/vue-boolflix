@@ -7,10 +7,19 @@ body{
     display: flex;
 }
 
-.movie-container{
+.container.movies,
+.container.series{
     display: inline-block;
     padding: 20px;
     margin: 20px;
     background-color: white;
     color: black;
+}
+
+.poster{
+    max-width: 150px;
+}
+
+.yellow{
+    color: orange;
 }
