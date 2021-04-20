@@ -18,38 +18,28 @@
         <div class="container">
 
             <div class="row">
-                <input type="text" id="" v-model="search" placeholder="Cerca...">
-                <button id="start-search">VAI</button>
+                <input type="text" v-model="search">
+                <button @click="startSearch()">GO</button>
             </div>
-
+    
             <div class="row">
-                <div class="container movies" v-for="(movie, index) in movies">
-                    <h4>{{ movie.title }}</h4>
-                    <p v-if="movie.title != movie.original_title">
-                        {{ movie.original_title }}</p>
+                <div v-for="movie in printMovies" class="container movies">
+                    <p>{{ movie.title }}</p>
+                    <p>{{ movie.original_title }}</p>
                     <p>{{ movie.vote_average }}</p>
-
-                    <div class="stars">
-                        <i v-for="star in printVote(movie.vote_average, index)" class="fas fa-star" ></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-
-                    <img :src="getPoster(movie, 'w154')" class="poster" alt="">
-                    <img v-if="printFlag(index, movies)" :src="printFlag(index, movies)" alt="">
+                    <img v-if="movie.flag" :src="movie.flag" alt="">
                     <p v-else>{{ movie.original_language }}</p>
                 </div>
-
-                <div class="container series" v-for="(serie, index) in series">
-                    <h4>{{ serie.name }}</h4>
-                    <p v-if="serie.name != serie.original_name">{{ serie.original_name} }</p>
+    
+                <div v-for="serie in printSeries" class="container series">
+                    <p>{{ serie.name }}</p>
+                    <p>{{ serie.original_name }}</p>
                     <p>{{ serie.vote_average }}</p>
-
-                    <img :src="getPoster(serie, 'w154')" class="poster" alt="">
-                    <img v-if="printFlag(index, series)" :src="printFlag(index, series)" alt="">
+                    <img v-if="serie.flag" :src="serie.flag" alt="">
                     <p v-else>{{ serie.original_language }}</p>
                 </div>
             </div>
-
+        
         </div>
     </div>
 </body>
