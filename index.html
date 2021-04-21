@@ -40,18 +40,24 @@
             <div class="grid">
                 <div v-for="movie in printMovies" class="card movies">
 
-                    <img :src="`https://image.tmdb.org/t/p/w342${movie.poster_path}`" alt="">
+                    <img v-if="movie.poster_path" :src="`https://image.tmdb.org/t/p/w342${movie.poster_path}`" alt="">
                     <!-- <img v-else :src="`https://image.tmdb.org/t/p/w342${movie.backdrop_path}`" alt=""> -->
                     
                     <div class="to-hover">
                         <h4><span>Titolo: </span>{{ movie.title }}</h4>
-                        <h5 v-if="movie.title != movie.original_title"><span>Titolo originale: </span>{{ movie.original_title }}</h5>
-                        
+                        <h5 v-if="movie.title != movie.original_title">
+                            <span>Titolo originale: </span>
+                            {{ movie.original_title }}
+                        </h5>
+
                         <div class="stars">
                             <i v-for="star in movie.vote_average" class="fas fa-star"></i>
                             <i v-for="star in (5 - movie.vote_average)" class="far fa-star"></i>
                         </div>
+                        
+                        <span v-if="movie.genre_names">{{ movie.genre_names }}</span>
     
+                        <p v-if="movie.actors">Cast: {{ movie.actors }}</p>
                         <p class="overview">Overview: {{ movie.overview }}</p>
                         <img v-if="movie.flag" :src="movie.flag" alt="" class="flag">
                         
@@ -68,13 +74,19 @@
 
                     <div class="to-hover">
                         <h4><span>Titolo: </span>{{ serie.name }}</h4>
-                        <h5 v-if="serie.name != serie.original_name"><span>Titolo originale: </span>{{ serie.original_name }}</h5>
+                        <h5 v-if="serie.name != serie.original_name">
+                            <span>Titolo originale: </span>
+                            {{ serie.original_name }}
+                        </h5>
                         
                         <div class="stars">
                             <i v-for="star in serie.vote_average" class="fas fa-star"></i>
                             <i v-for="star in (5 - serie.vote_average)" class="far fa-star"></i>
                         </div>
+
+                        <span v-if="serie.genre_names">{{ serie.genre_names }}</span>
     
+                        <p v-if="serie.actors">Cast: {{ serie.actors }}</p>
                         <p class="overview">Overview: {{ serie.overview }}</p>
                         <img v-if="serie.flag" :src="serie.flag" alt="" class="flag">
                         
@@ -96,5 +108,6 @@
 - attributi immagini con la chiave dell'item?
 - v-if sull'overview? Perchè alcuni risultati non hanno overview
 - risultati che non hanno poster
-- sistemare stelline
+- sistemare stelline e numero stelline
+- sistemare lista cast
  -->

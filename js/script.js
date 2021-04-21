@@ -6,10 +6,11 @@ function initVue(){
 
         data: {
 
-            search: 'grande bellezza',
+            search: 'matrix',
 
             movies: [],
             series: [],
+            moviesGenreIDs: [],
 
             flags: ['it', 'en']
         },
@@ -30,12 +31,12 @@ function initVue(){
 
                 }).then(data => {
 
-                    data.data.results.forEach(item => {
+                    data.data.results.forEach(movie => {
                         
-                        item.actors = '';
+                        movie.actors = '';
                         
-                        // Cast API
-                        axios.get(`https://api.themoviedb.org/3/movie/${item.id}/credits`, {
+                        // Movies Cast API
+                        axios.get(`https://api.themoviedb.org/3/movie/${movie.id}/credits`, {
                             
                             params: {
                                 'api_key': '82c1ff6f50a1c9a2281be84e79f97059'
@@ -45,16 +46,39 @@ function initVue(){
                             
                             for (let i = 0; i < data.data.cast.length && i < 5; i++){
                                 
-                                // console.log(data.data.cast[i].name);
-                                item.actors += `${data.data.cast[i].name}, `
+                                movie.actors += `${data.data.cast[i].name}, `
                             }
                             
                         });
                         
-                        // console.log(this.movies);
-                        this.movies.push(item);
+                        // Movies ID API
+                        // axios.get('https://api.themoviedb.org/3/genre/movie/list', {
+    
+                        //     params: {
+                        //         'api_key': '82c1ff6f50a1c9a2281be84e79f97059'
+                        //     }
+                            
+                        // }).then(data => {
+
+                        //     movie.genre_ids.forEach(type => {
+                        //         console.log('before' + type);
+                        //         data.data.genres.forEach(genre =>{
+                                    
+                        //             if (type == genre.id){
+
+                        //                 type = genre.name
+                        //                 console.log('after' + type);
+                        //             }
+                                    
+                        //         })
+                        //     })
+                              
+                        //     // console.log(this.moviesGenreIDs);
+                        // })
+                        this.movies.push(movie);
 
                     });
+
 
                 });
 
@@ -71,12 +95,12 @@ function initVue(){
 
                 }).then(data => {
 
-                    data.data.results.forEach(item => {
+                    data.data.results.forEach(serie => {
 
-                        item.actors = '';
+                        serie.actors = '';
                         
-                        // Cast API
-                        axios.get(`https://api.themoviedb.org/3/tv/${item.id}/credits`, {
+                        // TV Series Cast API
+                        axios.get(`https://api.themoviedb.org/3/tv/${serie.id}/credits`, {
                             
                             params: {
                                 'api_key': '82c1ff6f50a1c9a2281be84e79f97059'
@@ -86,17 +110,17 @@ function initVue(){
                             
                             for (let i = 0; i < data.data.cast.length && i < 5; i++){
                                 
-                                // console.log(data.data.cast[i].name);
-                                item.actors += `${data.data.cast[i].name}, `
+                                serie.actors += `${data.data.cast[i].name}, `
                             }
 
                         })
 
-                        // console.log(this.series);
-                        this.series.push(item)
+                        this.series.push(serie)
 
                     });
                 });
+
+
 
             },
 
@@ -108,37 +132,89 @@ function initVue(){
                 
                 // Dove posso creare una funzione per automatizzare le flags?
                 // È giusto mettere tutto in un unico ciclo?
-                this.movies.forEach(item => {
+                this.movies.forEach(movie => {
 
                     this.flags.forEach(flag => {
 
-                        if (item.original_language == flag){
+                        if (movie.original_language == flag){
 
-                            item.flag = `img/${flag}.webp`
+                            movie.flag = `img/${flag}.webp`
                         }
                     })
 
-                    item.original_language = item.original_language.toUpperCase();
-                    item.vote_average = Math.ceil(item.vote_average / 2);
-                });         
+                    movie.original_language = movie.original_language.toUpperCase();
+                    movie.vote_average = Math.ceil(movie.vote_average / 2);
+
+                    // Movies ID API
+                    axios.get('https://api.themoviedb.org/3/genre/movie/list', {
+
+                        params: {
+                            'api_key': '82c1ff6f50a1c9a2281be84e79f97059'
+                        }
+                        
+                    }).then(data => {
+
+                        movie.genre_names = '';
+
+                        movie.genre_ids.forEach((id, i) => {
+
+                            data.data.genres.forEach(genre =>{
+                                
+                                if (genre.id == id){
+                                    
+                                    movie.genre_ids.splice(i, 1, genre.name);
+                                    movie.genre_names += `${movie.genre_ids[i]}, `
+                                }
+                                
+                            })
+                        })
+                    })
+
+                });    
+                
 
                 return this.movies
             },
 
             printSeries: function(){
 
-                this.series.forEach(item => {
+                this.series.forEach(serie => {
 
                     this.flags.forEach(flag => {
 
-                        if (item.original_language == flag){
+                        if (serie.original_language == flag){
 
-                            item.flag = `img/${flag}.webp`
+                            serie.flag = `img/${flag}.webp`
                         }
                     })
 
-                    item.original_language = item.original_language.toUpperCase();
-                    item.vote_average = Math.ceil(item.vote_average / 2);
+                    serie.original_language = serie.original_language.toUpperCase();
+                    serie.vote_average = Math.ceil(serie.vote_average / 2);
+
+                    // TV Series ID API
+                    axios.get('https://api.themoviedb.org/3/genre/tv/list', {
+
+                        params: {
+                            'api_key': '82c1ff6f50a1c9a2281be84e79f97059'
+                        }
+                        
+                    }).then(data => {
+
+                        serie.genre_names = '';
+
+                        serie.genre_ids.forEach((id, i) => {
+
+                            data.data.genres.forEach(genre =>{
+                                
+                                if (genre.id == id){
+                                    
+                                    serie.genre_ids.splice(i, 1, genre.name);
+                                    serie.genre_names += `${serie.genre_ids[i]}, `
+                                }
+                                
+                            })
+                        })
+                    })
                 })
 
                 return this.series
@@ -160,3 +236,23 @@ function initVue(){
 }
 
 document.addEventListener('DOMContentLoaded', initVue)
+
+// axios.get('https://api.themoviedb.org/3/genre/movie/list', {
+
+//     params: {
+//         'api_key': '82c1ff6f50a1c9a2281be84e79f97059'
+//     }
+    
+// }).then(data => {
+    
+//     data.data.genres.forEach(genre =>{
+        
+//         movie.genre_ids.forEach(id => {
+
+//             if (id == genre.id){
+//                 id = genre.name
+//             }
+//         })
+        
+//     })
+// })
