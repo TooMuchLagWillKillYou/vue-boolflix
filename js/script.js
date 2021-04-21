@@ -6,7 +6,7 @@ function initVue(){
 
         data: {
 
-            search: 'matrix',
+            search: 'grande bellezza',
 
             movies: [],
             series: [],
@@ -19,8 +19,8 @@ function initVue(){
             startSearch: function(){
 
                 this.movies = [];
-                this.series = [];
 
+                // Movies API
                 axios.get('https://api.themoviedb.org/3/search/movie', {
 
                     params: {
@@ -30,11 +30,38 @@ function initVue(){
 
                 }).then(data => {
 
-                    data.data.results.forEach(item => { this.movies.push(item) });
-                    // console.log(this.movies);
-                    
+                    data.data.results.forEach(item => {
+                        
+                        item.actors = '';
+                        
+                        // Cast API
+                        axios.get(`https://api.themoviedb.org/3/movie/${item.id}/credits`, {
+                            
+                            params: {
+                                'api_key': '82c1ff6f50a1c9a2281be84e79f97059'
+                            }
+
+                        }).then(data => {
+                            
+                            for (let i = 0; i < data.data.cast.length && i < 5; i++){
+                                
+                                // console.log(data.data.cast[i].name);
+                                item.actors += `${data.data.cast[i].name}, `
+                            }
+                            
+                        });
+                        
+                        // console.log(this.movies);
+                        this.movies.push(item);
+
+                    });
+
                 });
-                
+
+
+                this.series = [];
+
+                // TV Series API
                 axios.get('https://api.themoviedb.org/3/search/tv', {
                     
                     params: {
@@ -44,9 +71,31 @@ function initVue(){
 
                 }).then(data => {
 
-                    data.data.results.forEach(item => { this.series.push(item) });
-                    // console.log(this.series);
+                    data.data.results.forEach(item => {
 
+                        item.actors = '';
+                        
+                        // Cast API
+                        axios.get(`https://api.themoviedb.org/3/tv/${item.id}/credits`, {
+                            
+                            params: {
+                                'api_key': '82c1ff6f50a1c9a2281be84e79f97059'
+                            }
+
+                        }).then(data => {
+                            
+                            for (let i = 0; i < data.data.cast.length && i < 5; i++){
+                                
+                                // console.log(data.data.cast[i].name);
+                                item.actors += `${data.data.cast[i].name}, `
+                            }
+
+                        })
+
+                        // console.log(this.series);
+                        this.series.push(item)
+
+                    });
                 });
 
             },
@@ -71,7 +120,6 @@ function initVue(){
 
                     item.original_language = item.original_language.toUpperCase();
                     item.vote_average = Math.ceil(item.vote_average / 2);
-
                 });         
 
                 return this.movies
@@ -99,13 +147,13 @@ function initVue(){
         },
 
         updated(){
-            // console.log('updated');
             
+            // console.log('updated');
         },
         
         mounted(){
+            
             // console.log('mounted');
-
         }
 
     })
