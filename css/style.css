@@ -36,24 +36,23 @@ body{
 }
 
 .to-hover{
-    display: flex;
-    flex-direction: column;
-    background-color: grey;
-    padding: 20px;
+    padding: 15px;
     height: 340.5px;
-
+    background-color: #333;
 }
 
 img + .to-hover{
     display: none;
+    background-color: black;
 }
 
+
+.to-hover,
 .card.movies:hover .to-hover,
 .card.series:hover .to-hover{
     display: flex;
     flex-direction: column;
-    background-color: black;
-    
+    font-size: 0.9em;
 }
 
 .card.movies:hover>img,
@@ -134,16 +133,24 @@ h5 span{
     align-items: center;
 }
 
-.stars .fas.fa-star{
+.fas.fa-star.gold{
     color: Goldenrod;
 }
 
-.stars .far.fa-star{
-    color: darkgray;
+.fas.fa-star.gray{
+    color: #555;
+}
+
+.genres,
+.cast{
+    margin-top: 10px;
+}
+
+.cast span{
+    font-weight: 600;
 }
 
 .overview{
-    font-size: 0.9em;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;

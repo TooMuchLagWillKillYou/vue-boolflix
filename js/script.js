@@ -10,8 +10,6 @@ function initVue(){
 
             movies: [],
             series: [],
-            moviesGenreIDs: [],
-
             flags: ['it', 'en']
         },
 
@@ -51,30 +49,6 @@ function initVue(){
                             
                         });
                         
-                        // Movies ID API
-                        // axios.get('https://api.themoviedb.org/3/genre/movie/list', {
-    
-                        //     params: {
-                        //         'api_key': '82c1ff6f50a1c9a2281be84e79f97059'
-                        //     }
-                            
-                        // }).then(data => {
-
-                        //     movie.genre_ids.forEach(type => {
-                        //         console.log('before' + type);
-                        //         data.data.genres.forEach(genre =>{
-                                    
-                        //             if (type == genre.id){
-
-                        //                 type = genre.name
-                        //                 console.log('after' + type);
-                        //             }
-                                    
-                        //         })
-                        //     })
-                              
-                        //     // console.log(this.moviesGenreIDs);
-                        // })
                         this.movies.push(movie);
 
                     });
@@ -163,7 +137,7 @@ function initVue(){
                                 if (genre.id == id){
                                     
                                     movie.genre_ids.splice(i, 1, genre.name);
-                                    movie.genre_names += `${movie.genre_ids[i]}, `
+                                    movie.genre_names += `${movie.genre_ids[i]}, `;
                                 }
                                 
                             })
